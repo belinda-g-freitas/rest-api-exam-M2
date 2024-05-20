@@ -21,36 +21,36 @@ import com.esgis.venteapi.services.ProduitService;
 public class ProduitController {
     
     @Autowired
-    private ProduitService produitService;
+    private ProduitService service;
 
     @PostMapping("/new")
     public Produit create(@RequestBody Produit produit) {
-        return produitService.create(produit);
+        return service.create(produit);
     }
 
     @GetMapping
     public List<Produit> findAllProduits() {
-        return produitService.findAll();
+        return service.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public Produit findOneProduits(@PathVariable String id) {
-        Optional<Produit> produit = produitService.findById(id);
+        Optional<Produit> produit = service.findById(id);
         if (produit.isPresent()) {
             return produit.get();
         }
         return null;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Produit updateProduit(@PathVariable String id, @RequestBody Produit produit) {
         produit.setId(id);
-        return produitService.update(produit);
+        return service.update(produit);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteProduit(@PathVariable String id) {
-        produitService.delete(id);
+        service.delete(id);
     }
 
 

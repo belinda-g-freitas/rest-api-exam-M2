@@ -37,7 +37,7 @@ public class AuthController {
 	private PasswordEncoder encoder;
 
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@GetMapping("/api/adminProfile")
+	@GetMapping("/api/v1/adminProfile")
 	public String adminProfile() {
 		try {
 			return "Welcome ADMIN";
@@ -47,7 +47,7 @@ public class AuthController {
 	}
 
 	@PreAuthorize("hasAuthority('USER')")
-	@GetMapping("/api/userProfile")
+	@GetMapping("/api/v1/userProfile")
 	public String userProfile() {
 		try {
 			return "Welcome User";
@@ -58,12 +58,12 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public JwtResponseDTO AuthenticateAndGetToken(@RequestBody AuthRequestDTO authRequestDTO) {
-		System.out.println("Je suis content");
+		// System.out.println("Je suis content");
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
-		System.out.println("Je suis content 1");
+		// System.out.println("Je suis content 1");
 		if (authentication.isAuthenticated()) {
-			System.out.println("Je suis content 2");
+			// System.out.println("Je suis content 2");
 			return JwtResponseDTO.builder()
 					.accessToken(jwtService.GenerateToken(authRequestDTO.getUsername())).build();
 		} else {

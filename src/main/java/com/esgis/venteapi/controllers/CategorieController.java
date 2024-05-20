@@ -34,7 +34,7 @@ public class CategorieController {
         return service.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public Categorie findOneCategories(@PathVariable String id) {
         Optional<Categorie> categorie = service.findById(id);
         if (categorie.isPresent()) {
@@ -43,14 +43,13 @@ public class CategorieController {
         return null;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Categorie updateCategorie(@PathVariable String id, @RequestBody Categorie categorie) {
         categorie.setId(id);
         return service.update(categorie);
     }
 
-    //DELETE http://localhost:8080/api/categories/12
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteCategorie(@PathVariable String id) {
         service.delete(id);
     }

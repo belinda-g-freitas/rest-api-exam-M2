@@ -34,7 +34,7 @@ public class AgentVendeurController {
     return service.findAll();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/find/{id}")
   public AgentVendeur findOneAgentVendeurs(@PathVariable String id) {
     Optional<AgentVendeur> seller = service.findById(id);
     if (seller.isPresent()) {
@@ -43,14 +43,13 @@ public class AgentVendeurController {
     return null;
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/update/{id}")
   public AgentVendeur updateAgentVendeur(@PathVariable String id, @RequestBody AgentVendeur seller) {
     seller.setId(id);
     return service.update(seller);
   }
 
-  // DELETE http://localhost:8080/api/sellers/12
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/delete/{id}")
   public void deleteAgentVendeur(@PathVariable String id) {
     service.delete(id);
   }

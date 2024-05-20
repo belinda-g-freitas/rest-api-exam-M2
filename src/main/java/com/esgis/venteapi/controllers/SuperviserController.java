@@ -34,7 +34,7 @@ public class SuperviserController {
         return service.findAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public Superviser findOneSupervisers(@PathVariable String id) {
         Optional<Superviser> superviser = service.findById(id);
         if (superviser.isPresent()) {
@@ -43,14 +43,13 @@ public class SuperviserController {
         return null;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public Superviser updateSuperviser(@PathVariable String id, @RequestBody Superviser superviser) {
         superviser.setId(id);
         return service.update(superviser);
     }
 
-    //DELETE http://localhost:8080/api/supervising/12
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteSuperviser(@PathVariable String id) {
         service.delete(id);
     }

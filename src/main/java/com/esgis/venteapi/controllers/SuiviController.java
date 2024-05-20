@@ -34,7 +34,7 @@ public class SuiviController {
     return service.findAll();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/find/{id}")
   public Suivi findOneSuivis(@PathVariable String id) {
     Optional<Suivi> suivi = service.findById(id);
     if (suivi.isPresent()) {
@@ -43,14 +43,13 @@ public class SuiviController {
     return null;
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/update/{id}")
   public Suivi updateSuivi(@PathVariable String id, @RequestBody Suivi suivi) {
     suivi.setId(id);
     return service.update(suivi);
   }
 
-  // DELETE http://localhost:8080/api/tracking/12
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/delete/{id}")
   public void deleteSuivi(@PathVariable String id) {
     service.delete(id);
   }

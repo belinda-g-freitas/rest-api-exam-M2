@@ -34,7 +34,7 @@ public class VenteController {
     return service.findAll();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/find/{id}")
   public Vente findOneVentes(@PathVariable String id) {
     Optional<Vente> vente = service.findById(id);
     if (vente.isPresent()) {
@@ -43,14 +43,13 @@ public class VenteController {
     return null;
   }
 
-  @PutMapping("/{id}")
+  @PutMapping("/update/{id}")
   public Vente updateVente(@PathVariable String id, @RequestBody Vente vente) {
     vente.setId(id);
     return service.update(vente);
   }
 
-  // DELETE http://localhost:8080/api/selling/12
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/delete/{id}")
   public void deleteVente(@PathVariable String id) {
     service.delete(id);
   }
