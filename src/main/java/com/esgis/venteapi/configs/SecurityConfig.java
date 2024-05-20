@@ -41,26 +41,35 @@ public class SecurityConfig {
                 .csrf(CsrfConfigurer::disable)
                 // Authorize requests
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/v1/users/signUp", "/api/v1/users/login").permitAll()
+                        .requestMatchers("/api/v1/users/signup",
+                                "/api/v1/users/login",
+                                "/api/v1/supervisors/signup",
+                                "/api/v1/supervisors/login",
+                                "/api/v1/sellers/signup",
+                                "/api/v1/sellers/login",
+                                "/api/v1/stores/signup",
+                                "/api/v1/stores/login"
+                                )
+                        .permitAll()
                         .requestMatchers("/api/v1/**").authenticated()
                         // stores
                         .requestMatchers("/api/v1/stores/find").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/v1/stores/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/v1/stores/**").hasRole("ADMIN")
                         // sellers
                         .requestMatchers("/api/v1/sellers/find").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/v1/sellers/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/v1/sellers/**").hasRole("ADMIN")
                         // supervisor
-                        .requestMatchers("/api/v1/supervisor/find").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/v1/supervisor/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/v1/supervisors/find").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/v1/supervisors/**").hasRole("ADMIN")
                         // tracking
                         .requestMatchers("/api/v1/tracking/find").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/v1/tracking/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/api/v1/tracking/**").hasRole("ADMIN")
                         // supervising
                         .requestMatchers("/api/v1/supervising/find").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/v1/supervising/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/api/v1/supervising/**").hasRole("ADMIN")
                         // selling
                         .requestMatchers("/api/v1/selling/find").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers("/api/v1/selling/**").hasAnyRole("ADMIN"))
+                        .requestMatchers("/api/v1/selling/**").hasRole("ADMIN"))
                 // Session management
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))

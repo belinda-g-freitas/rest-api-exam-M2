@@ -23,8 +23,8 @@ public class SuperviserController {
     @Autowired
     private SuperviserService service;
 
-    //POST http://localhost:8080/api/supervising/new
-    @PostMapping("/new")
+    //POST http://localhost:8080/api/supervising/signup
+    @PostMapping("/signup")
     public Superviser create(@RequestBody Superviser superviser) {
         return service.create(superviser);
     }

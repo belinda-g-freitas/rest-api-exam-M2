@@ -23,8 +23,8 @@ public class AgentVendeurController {
   @Autowired
   private AgentVendeurService service;
 
-  // POST http://localhost:8080/api/sellers/new
-  @PostMapping("/new")
+  // POST http://localhost:8080/api/sellers/signup
+  @PostMapping("/signup")
   public AgentVendeur create(@RequestBody AgentVendeur seller) {
     return service.create(seller);
   }

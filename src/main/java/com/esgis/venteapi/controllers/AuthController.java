@@ -61,9 +61,9 @@ public class AuthController {
 		// System.out.println("Je suis content");
 		Authentication authentication = authenticationManager.authenticate(
 				new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
-		// System.out.println("Je suis content 1");
+		System.out.println("Je suis content 1");
 		if (authentication.isAuthenticated()) {
-			// System.out.println("Je suis content 2");
+			System.out.println("Je suis content 2");
 			return JwtResponseDTO.builder()
 					.accessToken(jwtService.GenerateToken(authRequestDTO.getUsername())).build();
 		} else {
@@ -71,7 +71,7 @@ public class AuthController {
 		}
 	}
 
-	@PostMapping("/signUp")
+	@PostMapping("/signup")
 	public UserInfo addNewUser(@RequestBody UserInfo userInfo) {
 		userInfo.setPassword(encoder.encode(userInfo.getPassword()));
 		return userRepository.save(userInfo);

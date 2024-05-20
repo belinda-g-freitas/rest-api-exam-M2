@@ -23,8 +23,8 @@ public class BoutiqueController {
     @Autowired
     private BoutiqueService service;
 
-    //POST http://localhost:8080/api/stores/new
-    @PostMapping("/new")
+    //POST http://localhost:8080/api/stores/signup
+    @PostMapping("/signup")
     public Boutique create(@RequestBody Boutique store) {
         return service.create(store);
     }
