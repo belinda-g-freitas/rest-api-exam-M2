@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserInfo {
     @Id
-    private int id;
+    private String id;
     private String username;
     private String password;
     private Set<UserRole> roles = new HashSet<>();

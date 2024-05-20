@@ -1,7 +1,5 @@
 package com.esgis.venteapi.models;
 
-import java.util.Date;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Superviseur extends UserInfo {
   private String nomSuperviseur;
   private String prenomSuperviseur;
-  // 
-  private Date debutSupervis;
-  private Date finSupervis;
+  //
+  // private Date debutSupervis;
+  // private Date finSupervis;
 }

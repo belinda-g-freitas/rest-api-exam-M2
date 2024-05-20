@@ -42,7 +42,14 @@ public class SecurityConfig {
                 // Authorize requests
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/v1/users/signUp", "/api/v1/users/login").permitAll()
-                        .requestMatchers("/api/v1/**").authenticated())
+                        .requestMatchers("/api/v1/**").authenticated()
+                        .requestMatchers("/api/v1/stores").hasAnyRole("SELLER", "STORE")
+                        .requestMatchers("/api/v1/sellers").hasAnyRole("SUPERVISOR", "STORE", "SELLER")
+                        .requestMatchers("/api/v1/supervisor").hasAnyRole("SUPERVISOR", "STORE")
+                        .requestMatchers("/api/v1/tracking").hasAnyRole("SELLER", "STORE")
+                        .requestMatchers("/api/v1/supervising").hasAnyRole("SUPERVISOR")
+                        .requestMatchers("/api/v1/selling").hasAnyRole("SELLER", "STORE")
+                        )
                 // Session management
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -50,23 +57,25 @@ public class SecurityConfig {
                 .authenticationProvider(authenticationProvider())
                 // Add filter
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
- 
+
         return http.build();
     }
-    
-    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    //     return http.csrf().disable()
-    //             .authorizeHttpRequests()
-    //             .requestMatchers("/api/v1/login").permitAll()
-    //             .and()
-    //             .authorizeHttpRequests().requestMatchers("/api/v1/**")
-    //             .authenticated()
-    //             .and()
-    //             .sessionManagement()
-    //             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-    //             .and()
-    //             .authenticationProvider(authenticationProvider())
-    //             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class).build();
+
+    // public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
+    // Exception {
+    // return http.csrf().disable()
+    // .authorizeHttpRequests()
+    // .requestMatchers("/api/v1/login").permitAll()
+    // .and()
+    // .authorizeHttpRequests().requestMatchers("/api/v1/**")
+    // .authenticated()
+    // .and()
+    // .sessionManagement()
+    // .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+    // .and()
+    // .authenticationProvider(authenticationProvider())
+    // .addFilterBefore(jwtAuthFilter,
+    // UsernamePasswordAuthenticationFilter.class).build();
 
     // }
 

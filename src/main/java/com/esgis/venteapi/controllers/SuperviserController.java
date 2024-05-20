@@ -13,46 +13,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esgis.venteapi.models.Boutique;
-import com.esgis.venteapi.services.BoutiqueService;
+import com.esgis.venteapi.models.Superviser;
+import com.esgis.venteapi.services.SuperviserService;
 
 @RestController
-@RequestMapping("/api/v1/stores")
-public class BoutiqueController {
+@RequestMapping("/api/v1/supervising")
+public class SuperviserController {
 
     @Autowired
-    private BoutiqueService service;
+    private SuperviserService service;
 
-    //POST http://localhost:8080/api/stores/new
+    //POST http://localhost:8080/api/supervising/new
     @PostMapping("/new")
-    public Boutique create(@RequestBody Boutique store) {
-        return service.create(store);
+    public Superviser create(@RequestBody Superviser superviser) {
+        return service.create(superviser);
     }
 
     @GetMapping
-    public List<Boutique> findAllBoutiques() {
+    public List<Superviser> findAllSupervisers() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Boutique findOneBoutiques(@PathVariable String id) {
-        Optional<Boutique> store = service.findById(id);
-        if (store.isPresent()) {
-            return store.get();
+    public Superviser findOneSupervisers(@PathVariable String id) {
+        Optional<Superviser> superviser = service.findById(id);
+        if (superviser.isPresent()) {
+            return superviser.get();
         }
         return null;
     }
 
     @PutMapping("/{id}")
-    public Boutique updateBoutique(@PathVariable String id, @RequestBody Boutique store) {
-        store.setId(id);
-        return service.update(store);
+    public Superviser updateSuperviser(@PathVariable String id, @RequestBody Superviser superviser) {
+        superviser.setId(id);
+        return service.update(superviser);
     }
 
-    //DELETE http://localhost:8080/api/stores/12
+    //DELETE http://localhost:8080/api/supervising/12
     @DeleteMapping("/{id}")
-    public void deleteBoutique(@PathVariable String id) {
+    public void deleteSuperviser(@PathVariable String id) {
         service.delete(id);
     }
-
 }
+

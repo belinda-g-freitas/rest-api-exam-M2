@@ -15,7 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Approvisionnement {
    @Id
-   private int id;
+   private String id;
    private int quantiteStock;
    private Date dateStock;
+   // 
+   private String produitId;
+   private String boutiqueId;
 }

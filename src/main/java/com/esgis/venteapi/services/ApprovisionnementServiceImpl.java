@@ -34,16 +34,4 @@ public class ApprovisionnementServiceImpl implements ApprovisionnementService {
   public void delete(String id) {
     repository.deleteById(id);
   }
-
-  @Override
-  public Optional<Approvisionnement> findById(int id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'findById'");
-  }
-
-  @Override
-  public void delete(int id) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'delete'");
-  }
 }

@@ -16,9 +16,5 @@ public class Produit {
    private String id;
    private String codeProduit;
    private String nomProduit;
-   // private int quantite;
-   // private double prixAchat;
-   // private double prixVente;
-   // // private Boolean perissable;
    private Categorie categorie;
 }

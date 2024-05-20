@@ -18,4 +18,7 @@ public class Superviser {
   private String id;
   private Date debutSupervision;
   private Date finSupervision;
+  // 
+  private String agentId;
+  private String superviseurId;
 }

@@ -18,4 +18,7 @@ public class Suivi {
   private String id;
   private Date debutSuivi;
   private Date finSuivi;
+  //
+  private String agentId;
+  // private String superviseurId;
 }

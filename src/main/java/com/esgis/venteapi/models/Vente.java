@@ -18,4 +18,6 @@ public class Vente {
    private String id;
    private Date dateVente;
    private int qteVendue;
+   // 
+   private String produitId;
 }

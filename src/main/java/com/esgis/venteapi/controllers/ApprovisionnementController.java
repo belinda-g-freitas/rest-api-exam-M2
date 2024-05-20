@@ -35,7 +35,7 @@ public class ApprovisionnementController {
     }
 
     @GetMapping("/{id}")
-    public Approvisionnement findOneApprovisionnements(@PathVariable int id) {
+    public Approvisionnement findOneApprovisionnements(@PathVariable String id) {
         Optional<Approvisionnement> supply = service.findById(id);
         if (supply.isPresent()) {
             return supply.get();
@@ -44,14 +44,14 @@ public class ApprovisionnementController {
     }
 
     @PutMapping("/{id}")
-    public Approvisionnement updateApprovisionnement(@PathVariable int id, @RequestBody Approvisionnement supply) {
+    public Approvisionnement updateApprovisionnement(@PathVariable String id, @RequestBody Approvisionnement supply) {
         supply.setId(id);
         return service.update(supply);
     }
 
     //DELETE http://localhost:8080/api/supplies/12
     @DeleteMapping("/{id}")
-    public void deleteApprovisionnement(@PathVariable int id) {
+    public void deleteApprovisionnement(@PathVariable String id) {
         service.delete(id);
     }
 

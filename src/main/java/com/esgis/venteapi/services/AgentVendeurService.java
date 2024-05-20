@@ -12,7 +12,7 @@ public interface AgentVendeurService {
 
   public List<AgentVendeur> findAll();
 
-  public Optional<AgentVendeur> findById(int id);
+  public Optional<AgentVendeur> findById(String id);
 
-  public void delete(int id);
+  public void delete(String id);
 }

@@ -12,7 +12,7 @@ public interface BoutiqueService {
 
   public List<Boutique> findAll();
 
-  public Optional<Boutique> findById(int id);
+  public Optional<Boutique> findById(String id);
 
-  public void delete(int id);
+  public void delete(String id);
 }
