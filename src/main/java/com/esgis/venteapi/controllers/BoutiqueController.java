@@ -14,19 +14,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.Boutique;
+import com.esgis.venteapi.repositories.BoutiqueRepository;
 import com.esgis.venteapi.services.BoutiqueService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/api/v1/stores")
 public class BoutiqueController {
+    @Autowired
+    private BoutiqueRepository repository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+    
     @Autowired
     private BoutiqueService service;
 
-    //POST http://localhost:8080/api/stores/signup
     @PostMapping("/signup")
     public Boutique create(@RequestBody Boutique store) {
-        return service.create(store);
+        store.setPassword(encoder.encode(store.getPassword()));
+        return repository.save(store);
     }
 
     @GetMapping

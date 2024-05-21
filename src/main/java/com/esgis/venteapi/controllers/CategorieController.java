@@ -1,9 +1,14 @@
 package com.esgis.venteapi.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +28,13 @@ public class CategorieController {
     @Autowired
     private CategorieService service;
 
-    //POST http://localhost:8080/api/categories/new
     @PostMapping("/new")
-    public Categorie create(@RequestBody Categorie categorie) {
-        return service.create(categorie);
+    public ResponseEntity<Map<String, Object>> create(@Validated @RequestBody Categorie categorie) {
+        if (categorie.getNomCategorie() == null || categorie.getNomCategorie().isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("message", "Error, missing resuired fields"));
+        }
+        final Categorie data = service.create(categorie);
+        return new ResponseEntity<>(Map.of("message", "Success", "category", data), HttpStatus.CREATED);
     }
 
     @GetMapping

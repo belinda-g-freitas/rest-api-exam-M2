@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgis.venteapi.models.Superviser;
 import com.esgis.venteapi.services.SuperviserService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/v1/supervising")
+@RequiredArgsConstructor
 public class SuperviserController {
 
     @Autowired
     private SuperviserService service;
 
-    //POST http://localhost:8080/api/supervising/signup
     @PostMapping("/signup")
     public Superviser create(@RequestBody Superviser superviser) {
         return service.create(superviser);

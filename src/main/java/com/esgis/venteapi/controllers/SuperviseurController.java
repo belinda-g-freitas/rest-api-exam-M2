@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,20 +15,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.Superviseur;
+import com.esgis.venteapi.repositories.SuperviseurRepository;
 import com.esgis.venteapi.services.SuperviseurService;
 
 @RestController
 @RequestMapping("/api/v1/supervisors")
 public class SuperviseurController {
+    @Autowired
+    private SuperviseurRepository repository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private SuperviseurService service;
 
-    //POST http://localhost:8080/api/supervisors/new
-    @PostMapping("/new")
-    public Superviseur create(@RequestBody Superviseur superviseur) {
-        return service.create(superviseur);
+    @PostMapping("/signup")
+    public Superviseur create(@RequestBody Superviseur store) {
+        store.setPassword(encoder.encode(store.getPassword()));
+        return repository.save(store);
     }
+
+    @Autowired
 
     @GetMapping
     public List<Superviseur> findAllSuperviseurs() {

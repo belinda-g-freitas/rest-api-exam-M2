@@ -1,9 +1,13 @@
 package com.esgis.venteapi.controllers;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +27,17 @@ public class ApprovisionnementController {
     @Autowired
     private ApprovisionnementService service;
 
-    //POST http://localhost:8080/api/supplies/new
     @PostMapping("/new")
-    public Approvisionnement create(@RequestBody Approvisionnement supply) {
-        return service.create(supply);
+    public ResponseEntity<Map<String, Object>> create(@RequestBody Approvisionnement supply) {
+        if (supply.getBoutiqueId() == null || supply.getBoutiqueId().isBlank() || supply.getDateStock() == null
+                || supply.getDateStock().before(new Date(System.currentTimeMillis())) || supply.getProduitId() == null
+                || supply.getProduitId().isBlank() || supply.getQuantiteStock() <= 0) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("message", "Error, missing resuired fields or invalid values."));
+        }
+        final Approvisionnement data = service.create(supply);
+        return new ResponseEntity<>(Map.of("message", "Success", "supply", data), HttpStatus.CREATED);
+
     }
 
     @GetMapping
@@ -55,4 +66,3 @@ public class ApprovisionnementController {
     }
 
 }
-

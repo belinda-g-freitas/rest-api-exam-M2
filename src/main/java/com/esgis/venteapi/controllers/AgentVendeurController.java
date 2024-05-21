@@ -14,19 +14,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.AgentVendeur;
+import com.esgis.venteapi.repositories.AgentVendeurRepository;
 import com.esgis.venteapi.services.AgentVendeurService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
 @RequestMapping("/api/v1/sellers")
 public class AgentVendeurController {
+  @Autowired
+  private AgentVendeurRepository repository;
+
+  @Autowired
+  private PasswordEncoder encoder;
 
   @Autowired
   private AgentVendeurService service;
 
-  // POST http://localhost:8080/api/sellers/signup
   @PostMapping("/signup")
   public AgentVendeur create(@RequestBody AgentVendeur seller) {
-    return service.create(seller);
+    seller.setPassword(encoder.encode(seller.getPassword()));
+    return repository.save(seller);
   }
 
   @GetMapping
