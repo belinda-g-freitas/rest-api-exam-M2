@@ -1,9 +1,13 @@
 package com.esgis.venteapi.controllers;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,45 +17,57 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esgis.venteapi.models.Categorie;
 import com.esgis.venteapi.models.Produit;
+import com.esgis.venteapi.services.CategorieService;
 import com.esgis.venteapi.services.ProduitService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/api/v1/produits")
+@RequestMapping("/api/v1/products")
 public class ProduitController {
-    
-    @Autowired
-    private ProduitService service;
 
-    @PostMapping("/new")
-    public Produit create(@RequestBody Produit produit) {
-        return service.create(produit);
-    }
+	@Autowired
+	private ProduitService service;
 
-    @GetMapping
-    public List<Produit> findAllProduits() {
-        return service.findAll();
-    }
+	@Autowired
+	private CategorieService catService;
 
-    @GetMapping("/find/{id}")
-    public Produit findOneProduits(@PathVariable String id) {
-        Optional<Produit> produit = service.findById(id);
-        if (produit.isPresent()) {
-            return produit.get();
-        }
-        return null;
-    }
+	@PostMapping("/new")
+	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Produit product) {
+		final Optional<Categorie> cat = catService.findById(product.getCategorieId());
+		if (cat == null) {
+			return ResponseEntity.badRequest().body(Map.of("message", "This category doesn't exist."));
+		}
+		// 
+		final Produit data = service.create(product);
+		return new ResponseEntity<>(Map.of("message", "Success", "product", data), HttpStatus.CREATED);
+	}
 
-    @PutMapping("/update/{id}")
-    public Produit updateProduit(@PathVariable String id, @RequestBody Produit produit) {
-        produit.setId(id);
-        return service.update(produit);
-    }
+	@GetMapping
+	public List<Produit> findAllProduits() {
+		return service.findAll();
+	}
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteProduit(@PathVariable String id) {
-        service.delete(id);
-    }
+	@GetMapping("/find/{id}")
+	public Produit findOneProduits(@PathVariable String id) {
+		Optional<Produit> produit = service.findById(id);
+		if (produit.isPresent()) {
+			return produit.get();
+		}
+		return null;
+	}
 
+	@PutMapping("/update/{id}")
+	public Produit updateProduit(@PathVariable String id, @RequestBody Produit produit) {
+		produit.setId(id);
+		return service.update(produit);
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void deleteProduit(@PathVariable String id) {
+		service.delete(id);
+	}
 
 }

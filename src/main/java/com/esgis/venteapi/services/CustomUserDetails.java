@@ -9,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.esgis.venteapi.models.UserInfo;
-import com.esgis.venteapi.models.Role;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -26,8 +25,8 @@ public class CustomUserDetails implements UserDetails {
         // for(UserRole role : byUsername.getRoles()){
         // auths.add(new SimpleGrantedAuthority(role.getName().toUpperCase()));
         // }
-        Role role = byUsername.getRole();
-        auths.add(new SimpleGrantedAuthority(role.name()));
+        String role = byUsername.getRole();
+        auths.add(new SimpleGrantedAuthority(role));
 
         this.authorities = auths;
     }

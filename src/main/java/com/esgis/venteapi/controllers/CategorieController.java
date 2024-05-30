@@ -1,6 +1,5 @@
 package com.esgis.venteapi.controllers;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgis.venteapi.models.Categorie;
 import com.esgis.venteapi.services.CategorieService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/categories")
 public class CategorieController {
@@ -29,10 +30,7 @@ public class CategorieController {
     private CategorieService service;
 
     @PostMapping("/new")
-    public ResponseEntity<Map<String, Object>> create(@Validated @RequestBody Categorie categorie) {
-        if (categorie.getNomCategorie() == null || categorie.getNomCategorie().isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("message", "Error, missing resuired fields"));
-        }
+    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Categorie categorie) {
         final Categorie data = service.create(categorie);
         return new ResponseEntity<>(Map.of("message", "Success", "category", data), HttpStatus.CREATED);
     }

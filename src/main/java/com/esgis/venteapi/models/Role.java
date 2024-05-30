@@ -1,5 +1,5 @@
 package com.esgis.venteapi.models;
 
 public enum Role {
-  SUPERADMIN, ADMIN, USER
+  SUPERADMIN, OWNER, ADMIN, USER
 }

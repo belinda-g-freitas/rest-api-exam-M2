@@ -7,14 +7,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-// @Builder
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 public class SupervisorCreateDTO extends AuthRequestDTO {
-  private String username;
-  private String password;
-  private String nomAgent;
-  private String prenomAgent;
+  private String nomSuperviseur;
+  private String prenomSuperviseur;
 }

@@ -16,6 +16,6 @@ public class Categorie {
    @Id
    private String id;
    
-   @NotBlank(message = "nomCategorie is required and must be not null")
+   @NotBlank(message = "nomCategorie is required and must be not null and not empty")
    private String nomCategorie;
 }

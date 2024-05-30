@@ -1,9 +1,12 @@
 package com.esgis.venteapi.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.AgentVendeur;
+import com.esgis.venteapi.models.Role;
 import com.esgis.venteapi.repositories.AgentVendeurRepository;
 import com.esgis.venteapi.services.AgentVendeurService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RestController
@@ -31,9 +38,12 @@ public class AgentVendeurController {
   private AgentVendeurService service;
 
   @PostMapping("/signup")
-  public AgentVendeur create(@RequestBody AgentVendeur seller) {
+  public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody AgentVendeur seller) {
     seller.setPassword(encoder.encode(seller.getPassword()));
-    return repository.save(seller);
+    seller.setRole(Role.USER.name());
+    
+    final AgentVendeur data = repository.save(seller);
+    return new ResponseEntity<>(Map.of("message", "Success", "seller", data), HttpStatus.CREATED);
   }
 
   @GetMapping
@@ -53,6 +63,7 @@ public class AgentVendeurController {
   @PutMapping("/update/{id}")
   public AgentVendeur updateAgentVendeur(@PathVariable String id, @RequestBody AgentVendeur seller) {
     seller.setId(id);
+    seller.setRole(Role.USER.name());
     return service.update(seller);
   }
 
