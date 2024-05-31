@@ -20,7 +20,4 @@ public class Superviseur extends UserInfo {
 
   @NotBlank(message = "prenomSuperviseur is required and must be not null and not empty")
   private String prenomSuperviseur;
-  //
-  // private Date debutSupervis;
-  // private Date finSupervis;
 }

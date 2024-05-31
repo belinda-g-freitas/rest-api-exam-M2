@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.AgentVendeur;
+import com.esgis.venteapi.models.Boutique;
 import com.esgis.venteapi.models.Suivi;
 import com.esgis.venteapi.services.AgentVendeurService;
+import com.esgis.venteapi.services.BoutiqueService;
 import com.esgis.venteapi.services.SuiviService;
 
 import jakarta.validation.Valid;
@@ -32,6 +34,9 @@ public class SuiviController {
   private SuiviService service;
 
   @Autowired
+	private BoutiqueService storeService;
+
+  @Autowired
   private AgentVendeurService sellerService;
 
   @PostMapping("/new")
@@ -41,7 +46,12 @@ public class SuiviController {
       return ResponseEntity.badRequest().body(Map.of("message", "Invalid dates."));
     }
     //
-    final Optional<AgentVendeur> seller = sellerService.findById(suivi.getAgentId());
+		final Optional<Boutique> store = storeService.findById(suivi.getStoreId());
+		if (store == null) {
+			return ResponseEntity.badRequest().body(Map.of("message", "This store doesn't exist."));
+		}
+    //
+    final Optional<AgentVendeur> seller = sellerService.findById(suivi.getSellerId());
     if (seller == null) {
       return ResponseEntity.badRequest().body(Map.of("message", "This seller doesn't exist."));
     }

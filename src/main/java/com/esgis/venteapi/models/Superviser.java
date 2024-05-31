@@ -24,9 +24,9 @@ public class Superviser {
   @NotBlank(message = "finSupervision is required, must be a valid date and not not be in the past")
   private Date finSupervision;
   // 
-  @NotBlank(message = "agentId is required and must not be empty")
-  private String agentId;
+  @NotBlank(message = "sellerId is required and must not be empty")
+  private String sellerId;
 
-  @NotBlank(message = "superviseurId is required and must not be empty")
-  private String superviseurId;
+  @NotBlank(message = "supervisorId is required and must not be empty")
+  private String supervisorId;
 }

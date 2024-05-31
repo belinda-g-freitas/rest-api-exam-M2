@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.Approvisionnement;
 import com.esgis.venteapi.models.Boutique;
+import com.esgis.venteapi.models.Produit;
+import com.esgis.venteapi.models.AgentVendeur;
 import com.esgis.venteapi.services.ApprovisionnementService;
 import com.esgis.venteapi.services.BoutiqueService;
+import com.esgis.venteapi.services.AgentVendeurService;
+import com.esgis.venteapi.services.ProduitService;
 
 import jakarta.validation.Valid;
 
@@ -34,6 +38,12 @@ public class ApprovisionnementController {
 	@Autowired
 	private BoutiqueService storeService;
 
+	@Autowired
+	private ProduitService prodService;
+
+	@Autowired
+	private AgentVendeurService sellerService;
+
 	@PostMapping("/new")
 	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Approvisionnement supply) {
 		if (supply.getDateStock().before(new Date(System.currentTimeMillis()))
@@ -41,9 +51,19 @@ public class ApprovisionnementController {
 			return ResponseEntity.badRequest().body(Map.of("message", "Invalid dateStock or quantiteStock."));
 		}
 		//
-		final Optional<Boutique> store = storeService.findById(supply.getBoutiqueId());
+		final Optional<Boutique> store = storeService.findById(supply.getStoreId());
 		if (store == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This store doesn't exist."));
+		}
+		// 
+		final Optional<Produit> product = prodService.findById(supply.getProduitId());
+		if (product == null) {
+			return ResponseEntity.badRequest().body(Map.of("message", "This product doesn't exist."));
+		}
+		// 
+		final Optional<AgentVendeur> seller = sellerService.findById(supply.getSellerId());
+		if (seller == null) {
+			return ResponseEntity.badRequest().body(Map.of("message", "This seller doesn't exist."));
 		}
 		//
 		final Approvisionnement data = service.create(supply);

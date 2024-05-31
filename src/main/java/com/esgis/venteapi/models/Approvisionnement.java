@@ -27,5 +27,8 @@ public class Approvisionnement {
    private String produitId;
 
    @NotBlank(message = "boutiqueId is required and must be not null and not empty")
-   private String boutiqueId;
+   private String storeId;
+
+   @NotBlank(message = "vendeurId is required and must be not null and not empty")
+   private String sellerId;
 }

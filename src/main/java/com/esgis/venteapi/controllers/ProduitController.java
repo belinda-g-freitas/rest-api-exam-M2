@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esgis.venteapi.models.Boutique;
 import com.esgis.venteapi.models.Categorie;
 import com.esgis.venteapi.models.Produit;
+import com.esgis.venteapi.services.BoutiqueService;
 import com.esgis.venteapi.services.CategorieService;
 import com.esgis.venteapi.services.ProduitService;
 
@@ -33,13 +35,21 @@ public class ProduitController {
 	@Autowired
 	private CategorieService catService;
 
+	@Autowired
+	private BoutiqueService storeService;
+
 	@PostMapping("/new")
 	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Produit product) {
 		final Optional<Categorie> cat = catService.findById(product.getCategorieId());
 		if (cat == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This category doesn't exist."));
 		}
-		// 
+
+		final Optional<Boutique> store = storeService.findById(product.getStoreId());
+		if (store == null) {
+			return ResponseEntity.badRequest().body(Map.of("message", "This store doesn't exist."));
+		}
+		//
 		final Produit data = service.create(product);
 		return new ResponseEntity<>(Map.of("message", "Success", "product", data), HttpStatus.CREATED);
 	}

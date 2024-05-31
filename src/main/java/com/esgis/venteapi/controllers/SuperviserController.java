@@ -46,12 +46,12 @@ public class SuperviserController {
 			return ResponseEntity.badRequest().body(Map.of("message", "Error, missing resuired fields or invalid values."));
 		}
 		//
-		final Optional<AgentVendeur> seller = sellerService.findById(superviser.getAgentId());
+		final Optional<AgentVendeur> seller = sellerService.findById(superviser.getSellerId());
 		if (seller == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This seller doesn't exist."));
 		}
 		//
-		final Optional<Superviseur> supervis = supService.findById(superviser.getSuperviseurId());
+		final Optional<Superviseur> supervis = supService.findById(superviser.getSupervisorId());
 		if (supervis == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This supervisor doesn't exist."));
 		}

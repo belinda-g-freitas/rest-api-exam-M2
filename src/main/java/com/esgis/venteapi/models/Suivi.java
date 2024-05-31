@@ -23,8 +23,10 @@ public class Suivi {
 
   @NotBlank(message = "finSuivi is required, must be a valid date and not not be in the past")
   private Date finSuivi;
-  //
-  @NotBlank(message = "agentId is required and must be not null and not empty")
-  private String agentId;
-  // private String superviseurId;
+  
+  @NotBlank(message = "sellerId  is required and must be not null and not empty")
+  private String sellerId;
+
+  @NotBlank(message = "storeId is required and must be not null and not empty")
+  private String storeId;
 }

@@ -24,4 +24,7 @@ public class Produit {
 
    @NotBlank(message = "categorieId is required and must be not null and not empty")
    private String categorieId;
+
+   @NotBlank(message = "nomBoutique is required and must be not null and not empty")
+   private String storeId;
 }
