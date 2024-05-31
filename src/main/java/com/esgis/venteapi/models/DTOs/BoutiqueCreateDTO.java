@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoutiqueCreateDTO extends AuthRequestDTO {
-  // private String username;
-  // private String password;
   private String nomBoutique;
   private String telBoutique;
   private String addressBoutique;
