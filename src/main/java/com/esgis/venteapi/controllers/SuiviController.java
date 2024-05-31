@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgis.venteapi.models.AgentVendeur;
-import com.esgis.venteapi.models.Categorie;
 import com.esgis.venteapi.models.Suivi;
 import com.esgis.venteapi.services.AgentVendeurService;
 import com.esgis.venteapi.services.SuiviService;

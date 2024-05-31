@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esgis.venteapi.models.Boutique;
 import com.esgis.venteapi.models.Produit;
 import com.esgis.venteapi.models.Vente;
 import com.esgis.venteapi.services.ProduitService;
