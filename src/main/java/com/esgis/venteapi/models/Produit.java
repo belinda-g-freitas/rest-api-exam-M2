@@ -22,9 +22,9 @@ public class Produit {
    @NotBlank(message = "nomProduit is required and must be not null and not empty")
    private String nomProduit;
 
-   @NotBlank(message = "categorieId is required and must be not null and not empty")
-   private String categorieId;
+   @NotBlank(message = "categoryId is required and must be not null and not empty")
+   private String categoryId;
 
-   @NotBlank(message = "nomBoutique is required and must be not null and not empty")
+   @NotBlank(message = "storeId is required and must be not null and not empty")
    private String storeId;
 }

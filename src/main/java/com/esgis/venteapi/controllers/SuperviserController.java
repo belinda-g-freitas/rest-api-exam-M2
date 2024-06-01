@@ -57,10 +57,10 @@ public class SuperviserController {
 		}
 		//
 		final Superviser data = service.create(superviser);
-		return new ResponseEntity<>(Map.of("message", "Success", "supervising", data), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<Superviser> findAllSupervisers() {
 		return service.findAll();
 	}

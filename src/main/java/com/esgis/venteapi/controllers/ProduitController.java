@@ -40,7 +40,7 @@ public class ProduitController {
 
 	@PostMapping("/new")
 	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Produit product) {
-		final Optional<Categorie> cat = catService.findById(product.getCategorieId());
+		final Optional<Categorie> cat = catService.findById(product.getCategoryId());
 		if (cat == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This category doesn't exist."));
 		}
@@ -51,10 +51,10 @@ public class ProduitController {
 		}
 		//
 		final Produit data = service.create(product);
-		return new ResponseEntity<>(Map.of("message", "Success", "product", data), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<Produit> findAllProduits() {
 		return service.findAll();
 	}

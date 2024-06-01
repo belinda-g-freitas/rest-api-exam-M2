@@ -37,16 +37,16 @@ public class AgentVendeurController {
   @Autowired
   private AgentVendeurService service;
 
-  @PostMapping("/signup")
+  @PostMapping("/new")
   public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody AgentVendeur seller) {
     seller.setPassword(encoder.encode(seller.getPassword()));
     seller.setRole(Role.USER.name());
     
     final AgentVendeur data = repository.save(seller);
-    return new ResponseEntity<>(Map.of("message", "Success", "seller", data), HttpStatus.CREATED);
+    return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
   }
 
-  @GetMapping
+  @GetMapping("/all")
   public List<AgentVendeur> findAllAgentVendeurs() {
     return service.findAll();
   }

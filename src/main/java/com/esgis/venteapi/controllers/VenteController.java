@@ -47,10 +47,10 @@ public class VenteController {
     }
     //
     final Vente data = service.create(vente);
-    return new ResponseEntity<>(Map.of("message", "Success", "selling", data), HttpStatus.CREATED);
+    return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
   }
 
-  @GetMapping
+  @GetMapping("/all")
   public List<Vente> findAllVentes() {
     return service.findAll();
   }

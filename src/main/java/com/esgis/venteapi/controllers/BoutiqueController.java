@@ -47,7 +47,7 @@ public class BoutiqueController {
 		store.setRole(Role.USER.name());
 
 		final Boutique data = repository.save(store);
-		return new ResponseEntity<>(Map.of("message", "Success", "store", data), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/all")

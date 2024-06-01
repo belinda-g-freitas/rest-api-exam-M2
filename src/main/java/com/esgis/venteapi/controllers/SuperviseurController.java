@@ -36,7 +36,7 @@ public class SuperviseurController {
 	@Autowired
 	private SuperviseurService service;
 
-	@PostMapping("/signup")
+	@PostMapping("/new")
 	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Superviseur supervisor) {
 		Boolean exists = false;
 
@@ -52,12 +52,10 @@ public class SuperviseurController {
 		//
 		supervisor.setPassword(encoder.encode(supervisor.getPassword()));
 		final Superviseur data = repository.save(supervisor);
-		return new ResponseEntity<>(Map.of("message", "Success", "supervisor", data), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
 	}
 
-	@Autowired
-
-	@GetMapping
+	@GetMapping("/all")
 	public List<Superviseur> findAllSuperviseurs() {
 		return service.findAll();
 	}

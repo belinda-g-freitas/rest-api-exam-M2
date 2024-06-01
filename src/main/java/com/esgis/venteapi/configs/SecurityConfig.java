@@ -41,11 +41,11 @@ public class SecurityConfig {
 				.csrf(CsrfConfigurer::disable)
 				// Authorize requests
 				.authorizeHttpRequests(authz -> authz
-						.requestMatchers("/api/v1/users/login", "/api/v1/sellers/signup", "/api/v1/stores/new")
+						.requestMatchers("/api/v1/users/login", "/api/v1/sellers/new", "/api/v1/stores/new")
 						.permitAll()
 						.requestMatchers("/api/v1/**").authenticated()
 						.requestMatchers("/api/v1/users/signup", "/api/v1/users/update").hasRole("SUPERADMIN")
-						.requestMatchers("/api/v1/supervisors/signup", "/api/v1/supervisors/update")
+						.requestMatchers("/api/v1/supervisors/new", "/api/v1/supervisors/update")
 						.hasAnyRole("SUPERADMIN", "OWNER", "ADMIN")
 						// stores
 						// .requestMatchers("/api/v1/stores/find").hasAnyRole("ADMIN", "USER")
@@ -65,9 +65,12 @@ public class SecurityConfig {
 						// selling
 						// .requestMatchers("/api/v1/selling/find").hasAnyRole("ADMIN", "USER")
 						.requestMatchers("/api/v1/selling/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// selling
+						// categories
 						// .requestMatchers("/api/v1/categories/find").hasAnyRole("ADMIN", "USER")
 						.requestMatchers("/api/v1/categories/**").hasAnyAuthority("ADMIN", "SUPERADMIN", "OWNER")
+						// supplies
+						// .requestMatchers("/api/v1/supplies/find").hasAnyRole("ADMIN", "USER")
+						.requestMatchers("/api/v1/supplies/**").hasAnyAuthority("ADMIN", "SUPERADMIN", "OWNER")
 				)
 				// Session management
 				.sessionManagement(session -> session

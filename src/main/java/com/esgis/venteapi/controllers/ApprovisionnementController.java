@@ -67,10 +67,10 @@ public class ApprovisionnementController {
 		}
 		//
 		final Approvisionnement data = service.create(supply);
-		return new ResponseEntity<>(Map.of("message", "Success", "supply", data), HttpStatus.CREATED);
+		return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<Approvisionnement> findAllApprovisionnements() {
 		return service.findAll();
 	}

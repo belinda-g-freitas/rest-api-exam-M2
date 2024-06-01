@@ -57,10 +57,10 @@ public class SuiviController {
     }
     //
     final Suivi data = service.create(suivi);
-    return new ResponseEntity<>(Map.of("message", "Success", "tracking", data), HttpStatus.CREATED);
+    return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
   }
 
-  @GetMapping
+  @GetMapping("/all")
   public List<Suivi> findAllSuivis() {
     return service.findAll();
   }

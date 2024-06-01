@@ -31,10 +31,10 @@ public class CategorieController {
     @PostMapping("/new")
     public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Categorie categorie) {
         final Categorie data = service.create(categorie);
-        return new ResponseEntity<>(Map.of("message", "Success", "category", data), HttpStatus.CREATED);
+        return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Categorie> findAllCategories() {
         return service.findAll();
     }
