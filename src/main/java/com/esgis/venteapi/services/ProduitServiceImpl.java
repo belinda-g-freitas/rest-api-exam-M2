@@ -47,19 +47,19 @@ public class ProduitServiceImpl implements ProduitService {
 		return repository.findById(id);
 	}
 
-	@Override
-	public Object changeState(String id, boolean isActive) {
-		final Optional<Produit> data = repository.findById(id);
+	// @Override
+	// public Object changeState(String id, boolean isActive) {
+	// 	final Optional<Produit> data = repository.findById(id);
 		
-		if (data.isPresent()) {
-			final Produit result = data.get();
-			result.setActive(isActive);
+	// 	if (data.isPresent()) {
+	// 		final Produit result = data.get();
+	// 		result.setActive(isActive);
 		
-			return repository.save(result);
-		}
+	// 		return repository.save(result);
+	// 	}
 		
-		return null;
-	}
+	// 	return null;
+	// }
 
 	public void delete(String id) {
 		repository.deleteById(id);

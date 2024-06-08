@@ -13,6 +13,6 @@ public interface ProduitService {
     public List<Produit> findByStore(String id);
     public List<Produit> findByProductName(String name);
     public Optional<Produit> findById(String id);
-    public Object changeState(String id, boolean isActive);
+    // public Object changeState(String id, boolean isActive);
     public void delete(String id);
 }

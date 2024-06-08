@@ -77,7 +77,7 @@ public class ProduitController {
 		return service.findByStore(id);
 	}
 
-	@GetMapping("/byName/{id}")
+	@GetMapping("/byName/{name}")
 	public List<Produit> findByName(@PathVariable String name) {
 		return service.findByProductName(name);
 	}
@@ -88,10 +88,10 @@ public class ProduitController {
 		return service.update(produit);
 	}
 
-	@PutMapping("/changeState/{id}")
-	public Object changeState(@PathVariable String id, @RequestBody boolean isActive) {
-		return service.changeState(id, isActive);
-	}
+	// @PutMapping("/changeState/{id}")
+	// public Object changeState(@PathVariable String id, @RequestBody boolean isActive) {
+	// 	return service.changeState(id, isActive);
+	// }
 
 	@DeleteMapping("/delete/{id}")
 	public void deleteProduit(@PathVariable String id) {

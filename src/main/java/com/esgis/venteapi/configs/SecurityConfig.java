@@ -61,7 +61,7 @@ public class SecurityConfig {
 						//
 						.requestMatchers("/api/v1/stores/**", "/api/v1/sellers/**", "/api/v1/supervisors/**",
 								"/api/v1/tracking/**", "/api/v1/supervising/**", "/api/v1/selling/**", "/api/v1/products/**",
-								"/api/v1/categories/**")
+								"/api/v1/categories/**", "api/v1/supplies/**")
 						.hasAnyRole("ADMIN", "SUPERADMIN", "OWNER"))
 				// Session management
 				.sessionManagement(session -> session
