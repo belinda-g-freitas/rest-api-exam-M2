@@ -25,8 +25,8 @@ public class BoutiqueServiceImpl implements BoutiqueService {
 
   public List<Boutique> findAll() {
     final List<Boutique> list = repository.findAll();
-    list.sort((a, b) -> a.getUsername().compareToIgnoreCase(b.getUsername()));
-    
+    // list.sort((a, b) -> a.getUsername().compareToIgnoreCase(b.getUsername()));
+
     return list;
   }
 

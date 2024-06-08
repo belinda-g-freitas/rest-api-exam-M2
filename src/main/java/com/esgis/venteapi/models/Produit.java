@@ -27,4 +27,7 @@ public class Produit {
 
    @NotBlank(message = "storeId is required and must be not null and not empty")
    private String storeId;
+
+   // @NotBlank(message = "isActive is required and must be not null and not empty")
+   private boolean isActive;
 }

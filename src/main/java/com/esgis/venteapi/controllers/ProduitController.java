@@ -62,10 +62,24 @@ public class ProduitController {
 	@GetMapping("/find/{id}")
 	public Produit findOneProduits(@PathVariable String id) {
 		Optional<Produit> produit = service.findById(id);
-		if (produit.isPresent()) {
-			return produit.get();
-		}
+		if (produit.isPresent()) 	return produit.get();
+		
 		return null;
+	}
+
+	@GetMapping("/byCategory/{id}")
+	public List<Produit> findByCategory(@PathVariable String id) {
+		return service.findByCategory(id);
+	}
+
+	@GetMapping("/byStore/{id}")
+	public List<Produit> findByStore(@PathVariable String id) {
+		return service.findByStore(id);
+	}
+
+	@GetMapping("/byName/{id}")
+	public List<Produit> findByName(@PathVariable String name) {
+		return service.findByProductName(name);
 	}
 
 	@PutMapping("/update/{id}")
@@ -74,9 +88,13 @@ public class ProduitController {
 		return service.update(produit);
 	}
 
+	@PutMapping("/changeState/{id}")
+	public Object changeState(@PathVariable String id, @RequestBody boolean isActive) {
+		return service.changeState(id, isActive);
+	}
+
 	@DeleteMapping("/delete/{id}")
 	public void deleteProduit(@PathVariable String id) {
 		service.delete(id);
 	}
-
 }

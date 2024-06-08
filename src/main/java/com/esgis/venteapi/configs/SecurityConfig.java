@@ -41,37 +41,28 @@ public class SecurityConfig {
 				.csrf(CsrfConfigurer::disable)
 				// Authorize requests
 				.authorizeHttpRequests(authz -> authz
-						.requestMatchers("/api/v1/users/login", "/api/v1/sellers/new", "/api/v1/stores/new")
+						.requestMatchers("/api/v1/users/login")
 						.permitAll()
 						.requestMatchers("/api/v1/**").authenticated()
+						//
 						.requestMatchers("/api/v1/users/signup", "/api/v1/users/update").hasRole("SUPERADMIN")
-						.requestMatchers("/api/v1/supervisors/new", "/api/v1/supervisors/update")
-						.hasAnyRole("SUPERADMIN", "OWNER", "ADMIN")
-						// stores
-						// .requestMatchers("/api/v1/stores/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/stores/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// sellers
-						// .requestMatchers("/api/v1/sellers/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/sellers/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// supervisor
-						// .requestMatchers("/api/v1/supervisors/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/supervisors/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// tracking
-						// .requestMatchers("/api/v1/tracking/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/tracking/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// supervising
-						// .requestMatchers("/api/v1/supervising/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/supervising/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// selling
-						// .requestMatchers("/api/v1/selling/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/selling/**").hasAnyRole("ADMIN", "SUPERADMIN", "OWNER")
-						// categories
-						// .requestMatchers("/api/v1/categories/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/categories/**").hasAnyAuthority("ADMIN", "SUPERADMIN", "OWNER")
-						// supplies
-						// .requestMatchers("/api/v1/supplies/find").hasAnyRole("ADMIN", "USER")
-						.requestMatchers("/api/v1/supplies/**").hasAnyAuthority("ADMIN", "SUPERADMIN", "OWNER")
-				)
+						//
+						.requestMatchers("/api/v1/stores/new", "/api/v1/stores/delete", "/api/v1/sellers/delete",
+								"/api/v1/supervisors/delete",
+								"/api/v1/tracking/delete", "/api/v1/supervising/delete", "/api/v1/selling/delete",
+								"/api/v1/products/delete", "/api/v1/categories/delete", "/api/v1/supplies/delete")
+						.hasAnyRole("SUPERADMIN", "OWNER")
+						//
+						.requestMatchers("/api/v1/stores/find", "/api/v1/sellers/find", "/api/v1/sellers/update",
+								"/api/v1/tracking/new", "/api/v1/tracking/find", "/api/v1/selling/new", "/api/v1/products/new",
+								"/api/v1/products/find", "/api/v1/products/update", "/api/v1/categories/new", "/api/v1/categories/find",
+								"/api/v1/supplies/new", "/api/v1/supplies/update", "/api/v1/supplies/find")
+						.hasAnyRole("USER", "ADMIN", "OWNER", "SUPERADMIN")
+						//
+						.requestMatchers("/api/v1/stores/**", "/api/v1/sellers/**", "/api/v1/supervisors/**",
+								"/api/v1/tracking/**", "/api/v1/supervising/**", "/api/v1/selling/**", "/api/v1/products/**",
+								"/api/v1/categories/**")
+						.hasAnyRole("ADMIN", "SUPERADMIN", "OWNER"))
 				// Session management
 				.sessionManagement(session -> session
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
