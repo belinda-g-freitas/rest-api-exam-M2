@@ -34,22 +34,25 @@ public class SuiviController {
   private SuiviService service;
 
   @Autowired
-	private BoutiqueService storeService;
+  private BoutiqueService storeService;
 
   @Autowired
   private AgentVendeurService sellerService;
 
   @PostMapping("/new")
   public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Suivi suivi) {
-    if (suivi.getDebutSuivi().after(new Date(System.currentTimeMillis()))
+    if (/*
+         * suivi.getDebutSuivi().after(new Date(System.currentTimeMillis()))
+         * ||
+         */suivi.getFinSuivi().before(suivi.getFinSuivi())
         || suivi.getFinSuivi().before(new Date(System.currentTimeMillis()))) {
       return ResponseEntity.badRequest().body(Map.of("message", "Invalid dates."));
     }
     //
-		final Optional<Boutique> store = storeService.findById(suivi.getStoreId());
-		if (store == null) {
-			return ResponseEntity.badRequest().body(Map.of("message", "This store doesn't exist."));
-		}
+    final Optional<Boutique> store = storeService.findById(suivi.getStoreId());
+    if (store == null) {
+      return ResponseEntity.badRequest().body(Map.of("message", "This store doesn't exist."));
+    }
     //
     final Optional<AgentVendeur> seller = sellerService.findById(suivi.getSellerId());
     if (seller == null) {
@@ -77,8 +80,28 @@ public class SuiviController {
 
   @PutMapping("/update/{id}")
   public Suivi updateSuivi(@PathVariable String id, @RequestBody Suivi suivi) {
-    suivi.setId(id);
-    return service.update(suivi);
+    Optional<Suivi> optional = service.findById(id);
+    
+    if (optional.isPresent()) {
+      Suivi data = optional.get();
+      data.setId(id);
+
+      if (suivi.getStoreId() != null) {
+        data.setStoreId(suivi.getStoreId());
+      }
+      if (suivi.getDebutSuivi() != null) {
+        data.setDebutSuivi(suivi.getDebutSuivi());
+      }
+      if (suivi.getFinSuivi() != null) {
+        data.setFinSuivi(suivi.getFinSuivi());
+      }
+      if (suivi.getSellerId() != null) {
+        data.setSellerId(suivi.getSellerId());
+      }
+      return service.update(data);
+    } else {
+      return null;
+    }
   }
 
   @DeleteMapping("/delete/{id}")

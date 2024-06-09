@@ -41,7 +41,8 @@ public class SuperviseurController {
 		Boolean exists = false;
 
 		for (Role role : Role.values()) {
-			if (supervisor.getRole().toUpperCase() == role.name() && supervisor.getRole().toUpperCase() != "SUPERADMIN") {
+			if (supervisor.getRole().toUpperCase().equals(role.name())
+					&& supervisor.getRole().toUpperCase() != "SUPERADMIN") {
 				exists = true;
 				break;
 			}
@@ -71,8 +72,28 @@ public class SuperviseurController {
 
 	@PutMapping("/update/{id}")
 	public Superviseur updateSuperviseur(@PathVariable String id, @RequestBody Superviseur superviseur) {
-		superviseur.setId(id);
-		return service.update(superviseur);
+		Optional<Superviseur> optional = service.findById(id);
+
+		if (optional.isPresent()) {
+			Superviseur data = optional.get();
+			data.setId(id);
+			data.setRole(Role.USER.name());
+			data.setUsername(data.getUsername());
+
+			if (superviseur.getNomSuperviseur() != null) {
+				data.setNomSuperviseur(superviseur.getNomSuperviseur());
+			}
+			if (superviseur.getPrenomSuperviseur() != null) {
+				data.setPrenomSuperviseur(superviseur.getPrenomSuperviseur());
+			}
+			if (superviseur.getPassword() != null) {
+				data.setPassword(superviseur.getPassword());
+			}
+			
+			return service.update(data);
+		} else {
+			return null;
+		}
 	}
 
 	@DeleteMapping("/delete/{id}")

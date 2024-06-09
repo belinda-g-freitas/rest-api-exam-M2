@@ -76,8 +76,28 @@ public class SuperviserController {
 
 	@PutMapping("/update/{id}")
 	public Superviser updateSuperviser(@PathVariable String id, @RequestBody Superviser superviser) {
-		superviser.setId(id);
-		return service.update(superviser);
+		Optional<Superviser> optional = service.findById(id);
+    
+    if (optional.isPresent()) {
+      Superviser data = optional.get();
+      data.setId(id);
+
+      if (superviser.getDebutSupervision() != null) {
+        data.setDebutSupervision(superviser.getDebutSupervision());
+      }
+      if (superviser.getFinSupervision() != null) {
+        data.setFinSupervision(superviser.getFinSupervision());
+      }
+      if (superviser.getSupervisorId() != null) {
+        data.setSupervisorId(superviser.getSupervisorId());
+      }
+      if (superviser.getSellerId() != null) {
+        data.setSellerId(superviser.getSellerId());
+      }
+      return service.update(data);
+    } else {
+      return null;
+    }
 	}
 
 	@DeleteMapping("/delete/{id}")

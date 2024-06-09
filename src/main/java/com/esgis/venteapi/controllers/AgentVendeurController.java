@@ -41,7 +41,7 @@ public class AgentVendeurController {
   public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody AgentVendeur seller) {
     seller.setPassword(encoder.encode(seller.getPassword()));
     seller.setRole(Role.USER.name());
-    
+
     final AgentVendeur data = repository.save(seller);
     return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
   }
@@ -62,13 +62,31 @@ public class AgentVendeurController {
 
   @PutMapping("/update/{id}")
   public AgentVendeur updateAgentVendeur(@PathVariable String id, @RequestBody AgentVendeur seller) {
-    seller.setId(id);
-    seller.setRole(Role.USER.name());
-    return service.update(seller);
+    Optional<AgentVendeur> optional = service.findById(id);
+
+    if (optional.isPresent()) {
+      AgentVendeur data = optional.get();
+      data.setId(id);
+      data.setRole(Role.USER.name());
+      data.setUsername(data.getUsername());
+
+      if (seller.getNomAgent() != null) {
+        data.setNomAgent(seller.getNomAgent());
+      }
+      if (seller.getPassword() != null) {
+        data.setPassword(seller.getPassword());
+      }
+      if (seller.getPrenomAgent() != null) {
+        data.setPrenomAgent(seller.getPrenomAgent());
+      }
+      return service.update(data);
+    } else {
+      return null;
+    }
   }
 
   @DeleteMapping("/delete/{id}")
-  public void deleteAgentVendeur(@PathVariable String id) {
+  public void sellerAgentVendeur(@PathVariable String id) {
     service.delete(id);
   }
 

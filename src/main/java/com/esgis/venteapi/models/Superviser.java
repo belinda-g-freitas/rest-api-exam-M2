@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,10 @@ public class Superviser {
   @Id
   private String id;
 
-  @NotBlank(message = "debutSupervision is required, must be a valid date and not not be in the future")
+  @NotNull(message = "debutSupervision is required, must be a valid date and not not be in the future")
   private Date debutSupervision;
 
-  @NotBlank(message = "finSupervision is required, must be a valid date and not not be in the past")
+  @NotNull(message = "finSupervision is required, must be a valid date and not not be in the past")
   private Date finSupervision;
   // 
   @NotBlank(message = "sellerId is required and must not be empty")

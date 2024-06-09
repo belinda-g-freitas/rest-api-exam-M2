@@ -55,12 +55,12 @@ public class ApprovisionnementController {
 		if (store == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This store doesn't exist."));
 		}
-		// 
+		//
 		final Optional<Produit> product = prodService.findById(supply.getProduitId());
 		if (product == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This product doesn't exist."));
 		}
-		// 
+		//
 		final Optional<AgentVendeur> seller = sellerService.findById(supply.getSellerId());
 		if (seller == null) {
 			return ResponseEntity.badRequest().body(Map.of("message", "This seller doesn't exist."));
@@ -86,8 +86,31 @@ public class ApprovisionnementController {
 
 	@PutMapping("/update/{id}")
 	public Approvisionnement updateApprovisionnement(@PathVariable String id, @RequestBody Approvisionnement supply) {
-		supply.setId(id);
-		return service.update(supply);
+		Optional<Approvisionnement> optional = service.findById(id);
+
+		if (optional.isPresent()) {
+			Approvisionnement data = optional.get();
+			data.setId(id);
+
+			if (supply.getDateStock() != null) {
+				data.setDateStock(supply.getDateStock());
+			}
+			if (supply.getProduitId() != null) {
+				data.setProduitId(supply.getProduitId());
+			}
+			if (supply.getQuantiteStock() > 0) {
+				data.setQuantiteStock(supply.getQuantiteStock());
+			}
+			if (supply.getSellerId() != null) {
+				data.setSellerId(supply.getSellerId());
+			}
+			if (supply.getStoreId() != null) {
+				data.setStoreId(supply.getStoreId());
+			}
+			return service.update(data);
+		} else {
+			return null;
+		}
 	}
 
 	@DeleteMapping("/delete/{id}")

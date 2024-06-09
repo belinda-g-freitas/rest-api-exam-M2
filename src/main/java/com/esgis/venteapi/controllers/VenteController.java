@@ -66,8 +66,26 @@ public class VenteController {
 
   @PutMapping("/update/{id}")
   public Vente updateVente(@PathVariable String id, @RequestBody Vente vente) {
-    vente.setId(id);
-    return service.update(vente);
+    Optional<Vente> optional = service.findById(id);
+
+    if (optional.isPresent()) {
+      Vente data = optional.get();
+      data.setId(id);
+
+      if (vente.getDateVente() != null) {
+        data.setDateVente(vente.getDateVente());
+      }
+      if (vente.getProduitId() != null) {
+        data.setProduitId(vente.getProduitId());
+      }
+      if (vente.getQteVendue() > 0) {
+        data.setQteVendue(vente.getQteVendue());
+      }
+
+      return service.update(data);
+    } else {
+      return null;
+    }
   }
 
   @DeleteMapping("/delete/{id}")

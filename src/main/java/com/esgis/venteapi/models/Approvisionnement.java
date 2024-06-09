@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +21,7 @@ public class Approvisionnement {
    @NotBlank(message = "quantiteStock is required and must be >= 1")
    private int quantiteStock;
 
-   @NotBlank(message = "dateStock is required, must be a valid date and not not be in the future")
+   @NotNull(message = "dateStock is required, must be a valid date and not not be in the future")
    private Date dateStock;
    //
    @NotBlank(message = "produitId is required and must be not null and not empty")

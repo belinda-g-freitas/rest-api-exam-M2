@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgis.venteapi.models.Boutique;
 import com.esgis.venteapi.models.Categorie;
 import com.esgis.venteapi.models.Produit;
+import com.esgis.venteapi.models.Suivi;
 import com.esgis.venteapi.services.BoutiqueService;
 import com.esgis.venteapi.services.CategorieService;
 import com.esgis.venteapi.services.ProduitService;
@@ -84,8 +85,28 @@ public class ProduitController {
 
 	@PutMapping("/update/{id}")
 	public Produit updateProduit(@PathVariable String id, @RequestBody Produit produit) {
-		produit.setId(id);
-		return service.update(produit);
+		Optional<Produit> optional = service.findById(id);
+    
+    if (optional.isPresent()) {
+      Produit data = optional.get();
+      data.setId(id);
+
+      if (produit.getStoreId() != null) {
+        data.setStoreId(produit.getStoreId());
+      }
+      if (produit.getCategoryId() != null) {
+        data.setCategoryId(produit.getCategoryId());
+      }
+      if (produit.getCodeProduit() != null) {
+        data.setCodeProduit(produit.getCodeProduit());
+      }
+      if (produit.getNomProduit() != null) {
+        data.setNomProduit(produit.getNomProduit());
+      }
+      return service.update(data);
+    } else {
+      return null;
+    }
 	}
 
 	// @PutMapping("/changeState/{id}")

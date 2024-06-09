@@ -25,38 +25,49 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/categories")
 public class CategorieController {
 
-    @Autowired
-    private CategorieService service;
+	@Autowired
+	private CategorieService service;
 
-    @PostMapping("/new")
-    public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Categorie categorie) {
-        final Categorie data = service.create(categorie);
-        return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
-    }
+	@PostMapping("/new")
+	public ResponseEntity<Map<String, Object>> create(@Valid @RequestBody Categorie categorie) {
+		final Categorie data = service.create(categorie);
+		return new ResponseEntity<>(Map.of("message", "Success", "data", data), HttpStatus.CREATED);
+	}
 
-    @GetMapping("/all")
-    public List<Categorie> findAllCategories() {
-        return service.findAll();
-    }
+	@GetMapping("/all")
+	public List<Categorie> findAllCategories() {
+		return service.findAll();
+	}
 
-    @GetMapping("/find/{id}")
-    public Categorie findOneCategories(@PathVariable String id) {
-        Optional<Categorie> categorie = service.findById(id);
-        if (categorie.isPresent()) {
-            return categorie.get();
-        }
-        return null;
-    }
+	@GetMapping("/find/{id}")
+	public Categorie findOneCategories(@PathVariable String id) {
+		Optional<Categorie> categorie = service.findById(id);
+		if (categorie.isPresent())
+			return categorie.get();
 
-    @PutMapping("/update/{id}")
-    public Categorie updateCategorie(@PathVariable String id, @RequestBody Categorie categorie) {
-        categorie.setId(id);
-        return service.update(categorie);
-    }
+		return null;
+	}
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteCategorie(@PathVariable String id) {
-        service.delete(id);
-    }
+	@PutMapping("/update/{id}")
+	public Categorie updateCategorie(@PathVariable String id, @RequestBody Categorie categorie) {
+		Optional<Categorie> optional = service.findById(id);
+
+		if (optional.isPresent()) {
+			Categorie data = optional.get();
+			data.setId(id);
+
+			if (categorie.getNomCategorie() != null) {
+				data.setNomCategorie(categorie.getNomCategorie());
+			}
+			return service.update(data);
+		} else {
+			return null;
+		}
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public void deleteCategorie(@PathVariable String id) {
+		service.delete(id);
+	}
 
 }

@@ -66,9 +66,30 @@ public class BoutiqueController {
 
 	@PutMapping("/update/{id}")
 	public Boutique updateBoutique(@PathVariable String id, @RequestBody Boutique store) {
-		store.setId(id);
-		store.setRole(Role.USER.name());
-		return service.update(store);
+		Optional<Boutique> optional = service.findById(id);
+
+		if (optional.isPresent()) {
+			Boutique data = optional.get();
+			data.setId(id);
+			data.setRole(Role.USER.name());
+			data.setUsername(data.getUsername());
+
+			if (store.getAddressBoutique() != null) {
+				data.setAddressBoutique(store.getAddressBoutique());
+			}
+			if (store.getNomBoutique() != null) {
+				data.setNomBoutique(store.getNomBoutique());
+			}
+			if (store.getPassword() != null) {
+				data.setPassword(store.getPassword());
+			}
+			if (store.getTelBoutique() != null) {
+				data.setTelBoutique(store.getTelBoutique());
+			}
+			return service.update(data);
+		} else {
+			return null;
+		}
 	}
 
 	@DeleteMapping("/delete/{id}")
