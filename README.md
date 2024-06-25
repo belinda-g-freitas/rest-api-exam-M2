@@ -4,7 +4,6 @@
 - "/api/v1/stores/find",
 - "/api/v1/sellers/find",
 - "/api/v1/sellers/update",
-- "/api/v1/tracking/new",
 - "/api/v1/tracking/find",
 - "/api/v1/selling/new",
 - "/api/v1/products/new",
