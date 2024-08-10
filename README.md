@@ -1,6 +1,6 @@
 # rest_api_exam_m2
 
-#### Account with role USER can only operate on the following routes (even though some routes'll return status code 200 they won't make changes on the DB):
+##### Account with role USER can only operate on the following routes (even though some routes'll return status code 200 they won't make changes on the DB):
 - "/api/v1/stores/find",
 - "/api/v1/sellers/find",
 - "/api/v1/sellers/update",
@@ -14,3 +14,7 @@
 - "/api/v1/supplies/new",
 - "/api/v1/supplies/update",
 - "/api/v1/supplies/find"
+
+##### Stack
+- Framework: SpringBoot (with JWT for auth)
+- DB: MongoDB
